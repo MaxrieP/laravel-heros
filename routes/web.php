@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\HeroController;
+use App\Http\Controllers\SkillController;
+use App\Http\Controllers\ContactFormController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::resource('heroes', HeroController::class);
+Route::resource('skills', SkillController::class);
+Route::get('/contact', [ContactFormController::class, 'createForm']);
+Route::get('/contact', [ContactFormController::class, 'ContactForm'])->name('contact.store');
+
+require __DIR__.'/auth.php';
